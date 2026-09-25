@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SYNAPSE // OS - Next-Gen Autonomous AI Assistant</title>
+  <meta name="description" content="Next-Generation Cyberpunk AI Assistant Concept Interface with neural telemetry, conversational interface, multi-agent swarm orchestrator, and multimodal results synthesis.">
+  
+  <!-- Google Fonts: Orbitron for futuristic HUD typography, Plus Jakarta Sans for UI readability, JetBrains Mono for telemetry -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Orbitron:wght@500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome for futuristic cyber iconography -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="cyber-theme scanlines-active">
+  <!-- Interactive Ambient Canvas -->
+  <canvas id="ambient-canvas"></canvas>
+  <div class="vignette-overlay"></div>
+  <div class="scanline-overlay"></div>
+
+  <!-- Main System App Shell -->
+  <div class="cyber-app-shell">
+    
+    <!-- Top Cyber HUD Header -->
+    <header class="hud-header">
+      <div class="hud-brand">
+        <div class="brand-logo-hex">
+          <i class="fa-solid fa-brain"></i>
+          <span class="pulse-ring"></span>
+        </div>
+        <div class="brand-info">
+          <div class="brand-title">
+            <span class="neon-cyan">SYNAPSE</span><span class="neon-white"> // OS</span>
+            <span class="badge-quantum">v7.2.4-NEO</span>
+          </div>
+          <div class="brand-subtitle">NEURAL COGNITION MATRIX • DECENTRALIZED PROTOCOL</div>
+        </div>
+      </div>
+
+      <!-- Center Telemetry Ticker -->
+      <div class="hud-telemetry-bar">
+        <div class="telemetry-pill">
+          <span class="tele-dot online"></span>
+          <span class="tele-label">SYSTEM:</span>
+          <span class="tele-val neon-cyan">NOMINAL</span>
+        </div>
+        <div class="telemetry-pill">
+          <i class="fa-solid fa-microchip"></i>
+          <span class="tele-label">NEURAL LOAD:</span>
+          <span class="tele-val neon-magenta" id="hud-load-val">28.4%</span>
+        </div>
+        <div class="telemetry-pill">
+          <i class="fa-solid fa-atom"></i>
+          <span class="tele-label">COHERENCE:</span>
+          <span class="tele-val neon-amber" id="hud-coherence-val">99.82%</span>
+        </div>
+        <div class="telemetry-pill hide-mobile">
+          <i class="fa-solid fa-bolt"></i>
+          <span class="tele-label">LATENCY:</span>
+          <span class="tele-val neon-green">0.8ms</span>
+        </div>
+      </div>
+
+      <!-- Right Controls & Status -->
+      <div class="hud-actions">
+        <button id="btn-command-palette" class="cyber-btn-outline" title="Open Quantum Command Palette (Ctrl+K)">
+          <i class="fa-solid fa-terminal"></i>
+          <span class="btn-text">TERMINAL</span>
+          <kbd class="key-hint">^K</kbd>
+        </button>
+
+        <button id="btn-toggle-audio" class="cyber-btn-icon active" title="Toggle Interface Audio FX">
+          <i class="fa-solid fa-volume-high"></i>
+        </button>
+
+        <button id="btn-toggle-scanlines" class="cyber-btn-icon active" title="Toggle Holographic Scanlines">
+          <i class="fa-solid fa-tv"></i>
+        </button>
+
+        <div class="user-chip" id="header-user-chip" title="Neural Link Active">
+          <div class="avatar-ring">
+            <img src="assets/ai_avatar.jpg" alt="Aethel AI Core" class="header-avatar">
+          </div>
+          <div class="user-meta hide-mobile">
+            <span class="user-id">OP // SHIHAB</span>
+            <span class="user-clearance">LVL-4 CLEARANCE</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- App Body Container -->
+    <div class="cyber-body-layout">
+      
+      <!-- Left Cyber Navigation Sidebar -->
+      <aside class="cyber-sidebar">
+        <div class="sidebar-section-label">SYSTEM MODULES</div>
+        <nav class="sidebar-nav">
+          <button class="nav-item active" data-screen="dashboard" id="nav-dashboard">
+            <div class="nav-icon-box"><i class="fa-solid fa-gauge-high"></i></div>
+            <div class="nav-text-group">
+              <span class="nav-label">Core Dashboard</span>
+              <span class="nav-sub">Telemetry & status</span>
+            </div>
+            <span class="nav-accent-bar"></span>
+          </button>
+
+          <button class="nav-item" data-screen="chat" id="nav-chat">
+            <div class="nav-icon-box"><i class="fa-solid fa-comments"></i></div>
+            <div class="nav-text-group">
+              <span class="nav-label">Neural Chat</span>
+              <span class="nav-sub">Cognitive stream</span>
+            </div>
+            <span class="nav-badge pulse">LIVE</span>
+            <span class="nav-accent-bar"></span>
+          </button>
+
+          <button class="nav-item" data-screen="history" id="nav-history">
+            <div class="nav-icon-box"><i class="fa-solid fa-clock-rotate-left"></i></div>
+            <div class="nav-text-group">
+              <span class="nav-label">Memory Vault</span>
+              <span class="nav-sub">Saved timeline nodes</span>
+            </div>
+            <span class="nav-badge" id="memory-count-badge">14</span>
+            <span class="nav-accent-bar"></span>
+          </button>
+
+          <button class="nav-item" data-screen="results" id="nav-results">
+            <div class="nav-icon-box"><i class="fa-solid fa-cubes-stacked"></i></div>
+            <div class="nav-text-group">
+              <span class="nav-label">Results & Artifacts</span>
+              <span class="nav-sub">3D & synthesis viewport</span>
+            </div>
+            <span class="nav-badge">NEW</span>
+            <span class="nav-accent-bar"></span>
+          </button>
+
+          <button class="nav-item" data-screen="swarm" id="nav-swarm">
+            <div class="nav-icon-box"><i class="fa-solid fa-diagram-project"></i></div>
+            <div class="nav-text-group">
+              <span class="nav-label">Agent Swarm</span>
+              <span class="nav-sub">Neural orchestrator</span>
+            </div>
+            <span class="nav-badge neon-green-badge">4 RUN</span>
+            <span class="nav-accent-bar"></span>
+          </button>
+
+          <button class="nav-item" data-screen="settings" id="nav-settings">
+            <div class="nav-icon-box"><i class="fa-solid fa-sliders"></i></div>
+            <div class="nav-text-group">
+              <span class="nav-label">Link & Calibration</span>
+              <span class="nav-sub">Persona & parameters</span>
+            </div>
+            <span class="nav-accent-bar"></span>
+          </button>
+        </nav>
+
+        <!-- Sidebar Mini Core Card -->
+        <div class="sidebar-core-widget">
+          <div class="widget-header">
+            <span class="widget-title"><i class="fa-solid fa-shield-halved"></i> SENTINEL ACTIVE</span>
+            <span class="widget-status">SECURE</span>
+          </div>
+          <div class="widget-meter-track">
+            <div class="widget-meter-fill" style="width: 88%;"></div>
+          </div>
+          <div class="widget-meta">
+            <span>MEM: 1.84 PB</span>
+            <span>SYNC: 144Hz</span>
+          </div>
+        </div>
+
+        <!-- System Clock & Cycle -->
+        <div class="sidebar-footer">
+          <div class="clock-display" id="hud-clock">00:00:00 UTC</div>
+          <div class="cycle-display">CYCLE: 2094.09.25-X</div>
+        </div>
+      </aside>
+
+      <!-- Main Viewport Area (Hosts 6 Views) -->
+      <main class="cyber-viewport" id="main-viewport">
+
+        <!-- ==============================================
+             SCREEN 1: AI ASSISTANT HOME / DASHBOARD
+             ============================================== -->
+        <section class="screen-view active" id="screen-dashboard">
+          <div class="dashboard-grid">
+            
+            <!-- Hero Neural Core Hologram Banner -->
+            <div class="cyber-panel hero-panel col-span-12">
+              <div class="panel-corner top-left"></div>
+              <div class="panel-corner top-right"></div>
+              <div class="panel-corner bottom-left"></div>
+              <div class="panel-corner bottom-right"></div>
+              
+              <div class="hero-flex">
+                <div class="hero-avatar-wrapper">
+                  <div class="hologram-glow-circle"></div>
+                  <img src="assets/ai_avatar.jpg" alt="Aethel Neural Avatar" class="hero-avatar-img">
+                  <div class="hologram-scan-bar"></div>
+                  <div class="hud-crosshair tl"></div>
+                  <div class="hud-crosshair br"></div>
+                </div>
+
+                <div class="hero-info">
+                  <div class="status-badge-row">
+                    <span class="hud-chip cyan"><i class="fa-solid fa-circle-dot"></i> AETHEL // v7.2 ACTIVE</span>
+                    <span class="hud-chip magenta"><i class="fa-solid fa-wave-square"></i> THOUGHT VECTOR: DIVERGENT</span>
+                    <span class="hud-chip amber"><i class="fa-solid fa-network-wired"></i> 4 SWARM AGENTS LINKED</span>
+                  </div>
+
+                  <h1 class="hero-headline">Good evening, <span class="neon-gradient">Operator Shihab</span></h1>
+                  <p class="hero-desc">
+                    Cognitive state is optimal. Ready to synthesize quantum algorithms, orchestrate multi-agent workflows, or deconstruct spatial telemetry across your cyber-cluster.
+                  </p>
+
+                  <div class="hero-actions-row">
+                    <button class="cyber-btn-solid primary" onclick="navigateToScreen('chat')">
+                      <i class="fa-solid fa-terminal"></i> Initialize Prompt Session
+                    </button>
+                    <button class="cyber-btn-outline" onclick="navigateToScreen('swarm')">
+                      <i class="fa-solid fa-diagram-project"></i> Inspect Swarm Mesh
+                    </button>
+                    <button class="cyber-btn-outline" onclick="triggerQuickSynthesis()">
+                      <i class="fa-solid fa-microchip"></i> Run Core Diagnostics
+                    </button>
+                  </div>
+                </div>
+
+                <div class="hero-metrics-column">
+                  <div class="metric-card">
+                    <div class="metric-label">QUANTUM ENTANGLEMENT</div>
+                    <div class="metric-value neon-cyan">99.8%</div>
+                    <div class="metric-progress"><span style="width: 99.8%;"></span></div>
+                  </div>
+                  <div class="metric-card">
+                    <div class="metric-label">COGNITIVE LATENCY</div>
+                    <div class="metric-value neon-magenta">0.42 ms</div>
+                    <div class="metric-progress"><span style="width: 95%;"></span></div>
+                  </div>
+                  <div class="metric-card">
+                    <div class="metric-label">SYNTHESIS CONFIDENCE</div>
+                    <div class="metric-value neon-amber">99.4%</div>
+                    <div class="metric-progress"><span style="width: 99.4%;"></span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Neural Capsule Prompts -->
+            <div class="cyber-panel col-span-12">
+              <div class="panel-header">
+                <span class="panel-title"><i class="fa-solid fa-bolt neon-cyan"></i> QUICK PROMPT CAPSULES // NEURAL SHORTCUTS</span>
+                <span class="panel-tag">INSTANT EXECUTION</span>
+              </div>
+              <div class="capsules-grid">
+                <div class="capsule-card" onclick="runCapsulePrompt('Synthesize a distributed quantum consensus protocol in Rust with fault tolerance')">
+                  <div class="capsule-icon"><i class="fa-solid fa-code"></i></div>
+                  <div class="capsule-content">
+                    <div class="capsule-title">Quantum Consensus Protocol</div>
+                    <div class="capsule-sub">Compile fault-tolerant Rust algorithm & benchmarks</div>
+                  </div>
+                  <i class="fa-solid fa-arrow-right capsule-arrow"></i>
+                </div>
+
+                <div class="capsule-card" onclick="runCapsulePrompt('Deploy Swarm Agent Reconnaissance on network anomalous vectors in subnet 192.x')">
+                  <div class="capsule-icon"><i class="fa-solid fa-shield-virus"></i></div>
+                  <div class="capsule-content">
+                    <div class="capsule-title">Sentinel Threat Analysis</div>
+                    <div class="capsule-sub">Scan telemetry nodes for intrusion vectors</div>
+                  </div>
+                  <i class="fa-solid fa-arrow-right capsule-arrow"></i>
+                </div>
+
+                <div class="capsule-card" onclick="runCapsulePrompt('Simulate a 3D Holographic Urban Grid with multi-agent vehicle routing vectors')">
+                  <div class="capsule-icon"><i class="fa-solid fa-city"></i></div>
+                  <div class="capsule-content">
+                    <div class="capsule-title">Cybernetic City Simulation</div>
+                    <div class="capsule-sub">Generate 3D holographic projection & spatial data</div>
+                  </div>
+                  <i class="fa-solid fa-arrow-right capsule-arrow"></i>
+                </div>
+
+                <div class="capsule-card" onclick="runCapsulePrompt('Deconstruct deep memory bank and generate a strategic cognitive synthesis report')">
+                  <div class="capsule-icon"><i class="fa-solid fa-chart-pie"></i></div>
+                  <div class="capsule-content">
+                    <div class="capsule-title">Memory Vault Extraction</div>
+                    <div class="capsule-sub">Multi-cycle temporal analysis & trend projection</div>
+                  </div>
+                  <i class="fa-solid fa-arrow-right capsule-arrow"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- Live Neural Subsystem Diagnostics (Left 7 cols) -->
+            <div class="cyber-panel col-span-7">
+              <div class="panel-header">
+                <span class="panel-title"><i class="fa-solid fa-chart-line neon-cyan"></i> NEURAL SUBSYSTEM TELEMETRY</span>
+                <span class="panel-tag live-tag"><span class="blink-dot"></span> LIVE STREAM</span>
+              </div>
+              <div class="telemetry-chart-container">
+                <canvas id="dashboard-telemetry-canvas" height="180"></canvas>
+              </div>
+              <div class="telemetry-stats-row">
+                <div class="stat-box">
+                  <span class="s-title">VECTOR THROUGHPUT</span>
+                  <span class="s-val neon-cyan">4.28 M/s</span>
+                  <span class="s-sub">+12% vs last cycle</span>
+                </div>
+                <div class="stat-box">
+                  <span class="s-title">LOSS COEFFICIENT</span>
+                  <span class="s-val neon-green">0.0014</span>
+                  <span class="s-sub">Optimal convergence</span>
+                </div>
+                <div class="stat-box">
+                  <span class="s-title">BUFFER HEADROOM</span>
+                  <span class="s-val neon-magenta">84.2 GB</span>
+                  <span class="s-sub">High throughput ready</span>
+                </div>
+                <div class="stat-box">
+                  <span class="s-title">ENTROPY INDEX</span>
+                  <span class="s-val neon-amber">0.082</span>
+                  <span class="s-sub">Ultra-stable state</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Active Swarm & Recent Signals (Right 5 cols) -->
+            <div class="cyber-panel col-span-5">
+              <div class="panel-header">
+                <span class="panel-title"><i class="fa-solid fa-satellite-dish neon-magenta"></i> ACTIVE SUBSYSTEMS</span>
+                <button class="panel-btn" onclick="navigateToScreen('swarm')">VIEW SWARM</button>
+              </div>
+              <div class="active-subsystems-list">
+                <div class="subsystem-item">
+                  <div class="subsystem-status-indicator pulse-green"></div>
+                  <div class="subsystem-details">
+                    <div class="subsystem-name">SENTINEL-ALPHA // Cryptographic Guard</div>
+                    <div class="subsystem-activity">Intercepting encrypted port broadcasts • 0 threats</div>
+                  </div>
+                  <span class="subsystem-load">4.2%</span>
+                </div>
+
+                <div class="subsystem-item">
+                  <div class="subsystem-status-indicator pulse-cyan"></div>
+                  <div class="subsystem-details">
+                    <div class="subsystem-name">SYNTH-WEAVER // Code Generation Core</div>
+                    <div class="subsystem-activity">Compiling AST trees & self-repair benchmarks</div>
+                  </div>
+                  <span class="subsystem-load">18.6%</span>
+                </div>
+
+                <div class="subsystem-item">
+                  <div class="subsystem-status-indicator pulse-magenta"></div>
+                  <div class="subsystem-details">
+                    <div class="subsystem-name">HOLO-RENDERER // Spatial Projection</div>
+                    <div class="subsystem-activity">Streaming 8K holographic wireframe buffer</div>
+                  </div>
+                  <span class="subsystem-load">31.0%</span>
+                </div>
+
+                <div class="subsystem-item">
+                  <div class="subsystem-status-indicator pulse-amber"></div>
+                  <div class="subsystem-details">
+                    <div class="subsystem-name">VECTOR-MINER // High-D Semantic Search</div>
+                    <div class="subsystem-activity">Indexing 14 new knowledge vectors into memory</div>
+                  </div>
+                  <span class="subsystem-load">9.5%</span>
+                </div>
+              </div>
+
+              <div class="subsystem-footer-action">
+                <button class="cyber-btn-outline full-width" onclick="navigateToScreen('history')">
+                  <i class="fa-solid fa-memory"></i> Open Memory Vault Archive
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ==============================================
+             SCREEN 2: AI CHAT INTERFACE
+             ============================================== -->
+        <section class="screen-view" id="screen-chat">
+          <div class="chat-layout-grid">
+            
+            <!-- Chat Feed Container -->
+            <div class="chat-main-column">
+              <!-- Chat Context Header -->
+              <div class="chat-context-header">
+                <div class="chat-session-info">
+                  <div class="session-avatar-wrap">
+                    <img src="assets/ai_avatar.jpg" alt="Aethel" class="session-avatar">
+                    <span class="active-badge"></span>
+                  </div>
+                  <div>
+                    <div class="session-title">
+                      <span>AETHEL // SYNAPSE CONVERSATIONAL STREAM</span>
+                      <span class="tag-live">QUANTUM LIVE</span>
+                    </div>
+                    <div class="session-model">MODEL: AETHEL-7.2-ULTRA • 128K CONTEXT WINDOW • ZERO-LATENCY MODE</div>
+                  </div>
+                </div>
+
+                <div class="chat-header-actions">
+                  <button class="cyber-btn-sm" id="btn-clear-chat" title="Flush Current Context Buffer">
+                    <i class="fa-solid fa-broom"></i> Reset Buffer
+                  </button>
+                  <button class="cyber-btn-sm" id="btn-export-chat" title="Export Stream to Cyberdeck">
+                    <i class="fa-solid fa-file-export"></i> Export Log
+                  </button>
+                </div>
+              </div>
+
+              <!-- Message Stream Feed -->
+              <div class="chat-messages-container" id="chat-messages">
+                
+                <!-- Initial Assistant Greeting -->
+                <div class="chat-message assistant-msg" data-msg-id="msg-001">
+                  <div class="msg-avatar-col">
+                    <img src="assets/ai_avatar.jpg" alt="Aethel" class="msg-avatar">
+                  </div>
+                  <div class="msg-content-col">
+                    <div class="msg-meta">
+                      <span class="msg-author neon-cyan">AETHEL // NEURAL CORE</span>
+                      <span class="msg-time">CYCLE 2094.09.25 • 19:42:10</span>
+                      <span class="msg-chip">CONFIDENCE 99.9%</span>
+                    </div>
+
+                    <!-- Chain of Thought Box (Collapsible) -->
+                    <div class="thought-process-box">
+                      <div class="thought-toggle" onclick="toggleThought(this)">
+                        <i class="fa-solid fa-chevron-right thought-arrow"></i>
+                        <span><i class="fa-solid fa-brain"></i> Neural Thought Process [Expanded]</span>
+                        <span class="thought-tokens">42ms • 312 reasoning tokens</span>
+                      </div>
+                      <div class="thought-body active">
+                        <p>1. Validated neural telemetry handshake with Operator Shihab (Clearance Level 4).</p>
+                        <p>2. Pre-warmed quantum vector clusters: Code Synthesis, Spatial Projection, and Swarm Orchestration.</p>
+                        <p>3. Standby for complex multi-modal directive.</p>
+                      </div>
+                    </div>
+
+                    <div class="msg-bubble">
+                      <p>Greetings, Operator Shihab. Synaptic core is calibrated and running at nominal entropy. How may I augment your directives today?</p>
+                      <p>You can ask me to synthesize high-performance code, construct holographic city models, monitor swarm telemetry, or probe the timeline memory vault.</p>
+                    </div>
+
+                    <div class="msg-actions">
+                      <button class="msg-act-btn" onclick="copyMessageText(this)"><i class="fa-regular fa-copy"></i> Copy</button>
+                      <button class="msg-act-btn" onclick="saveToVault('System Handshake')"><i class="fa-regular fa-bookmark"></i> Pin to Memory</button>
+                      <button class="msg-act-btn" onclick="navigateToScreen('results')"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open Artifacts</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- User Message Sample -->
+                <div class="chat-message user-msg" data-msg-id="msg-002">
+                  <div class="msg-avatar-col">
+                    <div class="user-avatar-initials">SH</div>
+                  </div>
+                  <div class="msg-content-col">
+                    <div class="msg-meta">
+                      <span class="msg-author neon-white">OPERATOR SHIHAB</span>
+                      <span class="msg-time">CYCLE 2094.09.25 • 19:43:02</span>
+                    </div>
+                    <div class="msg-bubble">
+                      <p>Synthesize a high-performance quantum entanglement state observer in Rust with concurrent lock-free buffer telemetry.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Assistant Response with Code Sample -->
+                <div class="chat-message assistant-msg" data-msg-id="msg-003">
+                  <div class="msg-avatar-col">
+                    <img src="assets/ai_avatar.jpg" alt="Aethel" class="msg-avatar">
+                  </div>
+                  <div class="msg-content-col">
+                    <div class="msg-meta">
+                      <span class="msg-author neon-cyan">AETHEL // NEURAL CORE</span>
+                      <span class="msg-time">CYCLE 2094.09.25 • 19:43:08</span>
+                      <span class="msg-chip">COMPILED ARTIFACT</span>
+                    </div>
+
+                    <!-- Chain of Thought Box -->
+                    <div class="thought-process-box">
+                      <div class="thought-toggle" onclick="toggleThought(this)">
+                        <i class="fa-solid fa-chevron-down thought-arrow"></i>
+                        <span><i class="fa-solid fa-brain"></i> Neural Thought Process [Collapsed]</span>
+                        <span class="thought-tokens">86ms • 740 reasoning tokens</span>
+                      </div>
+                      <div class="thought-body">
+                        <p>1. Analyzed memory safety constraints for lock-free crossbeam atomic ring buffers.</p>
+                        <p>2. Injected SIMD-accelerated state vector projection matrix.</p>
+                        <p>3. Zero runtime allocations verified. Benchmarked at 0.08ns per state observation.</p>
+                      </div>
+                    </div>
+
+                    <div class="msg-bubble">
+                      <p>I have compiled the zero-cost quantum state observer. The implementation uses atomic crossbeam channels with hardware-assisted memory fences to ensure sub-millisecond sync across threads:</p>
+
+                      <!-- Cyber Code Block -->
+                      <div class="cyber-code-block">
+                        <div class="code-header">
+                          <span class="code-lang"><i class="fa-brands fa-rust neon-amber"></i> quantum_observer.rs</span>
+                          <div class="code-actions">
+                            <button class="code-action-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> Copy Code</button>
+                            <button class="code-action-btn" onclick="inspectInArtifacts()"><i class="fa-solid fa-cube"></i> Inspect in Viewport</button>
+                          </div>
+                        </div>
+                        <pre class="code-pre"><code><span class="kw">use</span> std::sync::atomic::{AtomicU64, Ordering};
+<span class="kw">use</span> crossbeam_epoch <span class="kw">as</span> epoch;
+
+<span class="kw">pub struct</span> <span class="type">QuantumEntanglementObserver</span> {
+    coherence_vector: AtomicU64,
+    telemetry_channel: crossbeam_channel::Sender&lt;<span class="type">StateSnapshot</span>&gt;,
+}
+
+<span class="kw">impl</span> <span class="type">QuantumEntanglementObserver</span> {
+    <span class="kw">pub fn</span> <span class="fn">new</span>(tx: crossbeam_channel::Sender&lt;<span class="type">StateSnapshot</span>&gt;) -&gt; <span class="type">Self</span> {
+        <span class="type">Self</span> {
+            coherence_vector: AtomicU64::new(0x7FFF_FFFF),
+            telemetry_channel: tx,
+        }
+    }
+
+    <span class="kw">pub inline fn</span> <span class="fn">observe_state</span>(&amp;<span class="kw">self</span>) -&gt; <span class="type">f64</span> {
+        <span class="kw">let</span> raw = <span class="kw">self</span>.coherence_vector.load(Ordering::Acquire);
+        (raw <span class="kw">as</span> f64) / (<span class="num">0x7FFF_FFFF</span> <span class="kw">as</span> f64)
+    }
+}</code></pre>
+                      </div>
+
+                      <p>This module is ready for hot-swapping into the neural pipeline. Would you like me to deploy this to the active Swarm Agent?</p>
+                    </div>
+
+                    <div class="msg-actions">
+                      <button class="msg-act-btn" onclick="copyMessageText(this)"><i class="fa-regular fa-copy"></i> Copy</button>
+                      <button class="msg-act-btn" onclick="saveToVault('Rust Quantum Observer')"><i class="fa-regular fa-bookmark"></i> Pin to Memory</button>
+                      <button class="msg-act-btn" onclick="navigateToScreen('results')"><i class="fa-solid fa-microchip"></i> Full Results View</button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Voice Waveform Dynamic Visualizer (Simulated Microphone) -->
+              <div class="audio-waveform-bar" id="audio-waveform-bar">
+                <div class="waveform-label">
+                  <span class="blink-dot red"></span> NEURAL AUDIO STREAM RECORDING:
+                </div>
+                <div class="waveform-bars" id="waveform-visualizer">
+                  <!-- Generated dynamically in JS -->
+                </div>
+                <button class="waveform-stop-btn" id="btn-stop-audio-rec">
+                  <i class="fa-solid fa-stop"></i> CANCEL AUDIO
+                </button>
+              </div>
+
+              <!-- Futuristic Chat Input Bar -->
+              <div class="chat-input-wrapper">
+                
+                <!-- Quick Token Context Bar -->
+                <div class="chat-token-bar">
+                  <div class="token-info">
+                    <i class="fa-solid fa-coins neon-cyan"></i>
+                    <span>CONTEXT CONSUMPTION: <strong class="neon-cyan" id="token-counter">3,420</strong> / 128,000 Q-TOKENS</span>
+                  </div>
+                  <div class="token-tags">
+                    <span class="token-pill">LATENCY: 0.42ms</span>
+                    <span class="token-pill">SIMD: ON</span>
+                    <span class="token-pill">SWARM BRIDGE: READY</span>
+                  </div>
+                </div>
+
+                <div class="chat-input-controls">
+                  <button class="input-tool-btn" id="btn-attach-media" title="Inject Multimodal Matrix (Hologram / Code / Memory)">
+                    <i class="fa-solid fa-paperclip"></i>
+                  </button>
+                  <button class="input-tool-btn" id="btn-voice-input" title="Toggle Neural Voice Waveform Input">
+                    <i class="fa-solid fa-microphone"></i>
+                  </button>
+
+                  <textarea id="chat-input-field" placeholder="Transmit neural directive... (Press Enter to send, Shift+Enter for newline, or click a Quick Capsule)" rows="1"></textarea>
+
+                  <button class="chat-send-btn" id="btn-send-message" title="Transmit to Neural Core">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span>TRANSMIT</span>
+                  </button>
+                </div>
+
+                <!-- Input Footer Quick suggestions -->
+                <div class="input-suggestions">
+                  <span class="suggestion-chip" onclick="fillChatInput('Benchmark current swarm agents across vector operations')">⚡ Benchmark Swarm</span>
+                  <span class="suggestion-chip" onclick="fillChatInput('Simulate 3D Holographic Urban Grid wireframe in Viewport')">🏙️ 3D Hologram City</span>
+                  <span class="suggestion-chip" onclick="fillChatInput('Audit memory retention and purge expired cycles')">🧹 Audit Memory Vault</span>
+                  <span class="suggestion-chip" onclick="fillChatInput('Explain quantum entanglement loss coefficient')">🔬 Quantum Physics</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chat Sidebar Telemetry (Right Column) -->
+            <div class="chat-side-telemetry">
+              
+              <!-- Core Persona Status Widget -->
+              <div class="cyber-panel">
+                <div class="panel-header">
+                  <span class="panel-title"><i class="fa-solid fa-user-astronaut neon-cyan"></i> ACTIVE COGNITIVE AGENT</span>
+                </div>
+                <div class="persona-mini-card">
+                  <img src="assets/ai_avatar.jpg" alt="Aethel" class="mini-avatar">
+                  <div class="mini-info">
+                    <div class="mini-name">AETHEL v7.2</div>
+                    <div class="mini-role">Primary Neural Synthesizer</div>
+                    <div class="mini-status"><span class="blink-dot green"></span> SYNAPSE CONNECTED</div>
+                  </div>
+                </div>
+                <div class="param-mini-list">
+                  <div class="param-row">
+                    <span>TEMPERATURE</span>
+                    <span class="neon-cyan">0.72</span>
+                  </div>
+                  <div class="param-row">
+                    <span>TOP_P SAMPLING</span>
+                    <span class="neon-magenta">0.95</span>
+                  </div>
+                  <div class="param-row">
+                    <span>REASONING DEPTH</span>
+                    <span class="neon-amber">MAXIMUM</span>
+                  </div>
+                  <div class="param-row">
+                    <span>SECURITY ENCLAVE</span>
+                    <span class="neon-green">VERIFIED</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Context Tokens Gauge -->
+              <div class="cyber-panel">
+                <div class="panel-header">
+                  <span class="panel-title"><i class="fa-solid fa-gauge neon-magenta"></i> BUFFER ALLOCATION</span>
+                </div>
+                <div class="gauge-box">
+                  <div class="gauge-dial-outer">
+                    <div class="gauge-dial-inner">
+                      <span class="gauge-number neon-magenta">2.6%</span>
+                      <span class="gauge-sub">USED</span>
+                    </div>
+                  </div>
+                  <div class="gauge-desc">
+                    124,580 Q-tokens remaining in active high-speed neural memory cache.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quick Swarm Signal -->
+              <div class="cyber-panel">
+                <div class="panel-header">
+                  <span class="panel-title"><i class="fa-solid fa-microchip neon-amber"></i> COGNITIVE STREAMS</span>
+                </div>
+                <div class="stream-signal-list">
+                  <div class="signal-item">
+                    <span class="sig-name">Synthesizer Stream</span>
+                    <span class="sig-rate neon-green">144.2 t/s</span>
+                  </div>
+                  <div class="signal-item">
+                    <span class="sig-name">Reasoning Engine</span>
+                    <span class="sig-rate neon-cyan">68.0 t/s</span>
+                  </div>
+                  <div class="signal-item">
+                    <span class="sig-name">Telemetry Sentinel</span>
+                    <span class="sig-rate neon-magenta">1.2 k/s</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ==============================================
+             SCREEN 3: CONVERSATION HISTORY / MEMORY VAULT
+             ============================================== -->
+        <section class="screen-view" id="screen-history">
+          <div class="history-layout">
+            
+            <!-- Vault Filter & Header -->
+            <div class="vault-header-panel cyber-panel">
+              <div class="vault-title-wrap">
+                <h2><i class="fa-solid fa-clock-rotate-left neon-cyan"></i> NEURAL MEMORY VAULT // TIMELINE NODES</h2>
+                <p>Persistent semantic memory archive across all quantum reasoning cycles.</p>
+              </div>
+
+              <div class="vault-search-row">
+                <div class="cyber-search-box">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                  <input type="text" id="history-search-input" placeholder="Query semantic memories by keyword, hash, or tag...">
+                </div>
+
+                <div class="vault-tag-filters" id="history-tags-filter">
+                  <button class="filter-pill active" data-filter="all">ALL NODES</button>
+                  <button class="filter-pill" data-filter="code">CODE ARTIFACTS</button>
+                  <button class="filter-pill" data-filter="analysis">ANALYSIS</button>
+                  <button class="filter-pill" data-filter="swarm">SWARM ORCHESTRATION</button>
+                  <button class="filter-pill" data-filter="starred"><i class="fa-solid fa-star"></i> PINNED</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Vault Memory Node Cards Grid -->
+            <div class="memory-nodes-grid" id="memory-nodes-grid">
+              
+              <!-- Memory Card 1 -->
+              <div class="memory-card" data-category="code" data-starred="true">
+                <div class="card-status-strip cyan"></div>
+                <div class="memory-card-header">
+                  <span class="mem-cycle"><i class="fa-solid fa-timeline"></i> CYCLE 2094.09.25 • 19:43</span>
+                  <div class="mem-actions">
+                    <button class="star-btn active" title="Toggle Pinned"><i class="fa-solid fa-star"></i></button>
+                    <button class="mem-more-btn"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                  </div>
+                </div>
+                <h3 class="memory-card-title">Rust Quantum Entanglement Observer</h3>
+                <p class="memory-card-summary">
+                  Synthesized zero-cost lock-free observer with SIMD vector projection and atomic crossbeam channel synchronization.
+                </p>
+                <div class="memory-tags">
+                  <span class="m-tag"><i class="fa-brands fa-rust"></i> Rust</span>
+                  <span class="m-tag">Lock-Free</span>
+                  <span class="m-tag">SIMD</span>
+                </div>
+                <div class="memory-footer">
+                  <span class="m-stat"><i class="fa-solid fa-cube"></i> 420 KB Vector</span>
+                  <button class="cyber-btn-sm" onclick="restoreMemoryToChat('Rust Quantum Entanglement Observer')">
+                    <i class="fa-solid fa-arrow-rotate-left"></i> Restore Node
+                  </button>
+                </div>
+              </div>
+
+              <!-- Memory Card 2 -->
+              <div class="memory-card" data-category="analysis" data-starred="true">
+                <div class="card-status-strip magenta"></div>
+                <div class="memory-card-header">
+                  <span class="mem-cycle"><i class="fa-solid fa-timeline"></i> CYCLE 2094.09.24 • 14:18</span>
+                  <div class="mem-actions">
+                    <button class="star-btn active" title="Toggle Pinned"><i class="fa-solid fa-star"></i></button>
+                    <button class="mem-more-btn"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                  </div>
+                </div>
+                <h3 class="memory-card-title">Holographic Urban Grid Synthesis</h3>
+                <p class="memory-card-summary">
+                  Spatial city simulation wireframe with autonomous agent routing, quantum traffic density mapping, and photon load.
+                </p>
+                <div class="memory-tags">
+                  <span class="m-tag">3D Hologram</span>
+                  <span class="m-tag">Spatial</span>
+                  <span class="m-tag">Urban Mesh</span>
+                </div>
+                <div class="memory-footer">
+                  <span class="m-stat"><i class="fa-solid fa-cube"></i> 1.2 MB Vector</span>
+                  <button class="cyber-btn-sm" onclick="navigateToScreen('results')">
+                    <i class="fa-solid fa-eye"></i> View Hologram
+                  </button>
+                </div>
+              </div>
+
+              <!-- Memory Card 3 -->
+              <div class="memory-card" data-category="swarm" data-starred="false">
+                <div class="card-status-strip amber"></div>
+                <div class="memory-card-header">
+                  <span class="mem-cycle"><i class="fa-solid fa-timeline"></i> CYCLE 2094.09.23 • 08:32</span>
+                  <div class="mem-actions">
+                    <button class="star-btn" title="Toggle Pinned"><i class="fa-regular fa-star"></i></button>
+                    <button class="mem-more-btn"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                  </div>
+                </div>
+                <h3 class="memory-card-title">Subnet Intrusion Detection & Swarm Quell</h3>
+                <p class="memory-card-summary">
+                  Sentinel Alpha isolated 12 anomalous encrypted packet payloads. Swarm quarantined infected node cluster in 1.4ms.
+                </p>
+                <div class="memory-tags">
+                  <span class="m-tag">Security</span>
+                  <span class="m-tag">Sentinel</span>
+                  <span class="m-tag">Swarm</span>
+                </div>
+                <div class="memory-footer">
+                  <span class="m-stat"><i class="fa-solid fa-cube"></i> 680 KB Vector</span>
+                  <button class="cyber-btn-sm" onclick="restoreMemoryToChat('Subnet Intrusion Detection & Swarm Quell')">
+                    <i class="fa-solid fa-arrow-rotate-left"></i> Restore Node
+                  </button>
+                </div>
+              </div>
+
+              <!-- Memory Card 4 -->
+              <div class="memory-card" data-category="code" data-starred="false">
+                <div class="card-status-strip green"></div>
+                <div class="memory-card-header">
+                  <span class="mem-cycle"><i class="fa-solid fa-timeline"></i> CYCLE 2094.09.22 • 22:50</span>
+                  <div class="mem-actions">
+                    <button class="star-btn" title="Toggle Pinned"><i class="fa-regular fa-star"></i></button>
+                    <button class="mem-more-btn"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                  </div>
+                </div>
+                <h3 class="memory-card-title">Decentralized Neural Weights Sharding</h3>
+                <p class="memory-card-summary">
+                  Distributed 70B parameter tensor weights across 8 localized cryptographic nodes using erasure-coded polynomial slices.
+                </p>
+                <div class="memory-tags">
+                  <span class="m-tag">Tensors</span>
+                  <span class="m-tag">Distributed</span>
+                  <span class="m-tag">Crypto</span>
+                </div>
+                <div class="memory-footer">
+                  <span class="m-stat"><i class="fa-solid fa-cube"></i> 3.4 MB Vector</span>
+                  <button class="cyber-btn-sm" onclick="restoreMemoryToChat('Decentralized Neural Weights Sharding')">
+                    <i class="fa-solid fa-arrow-rotate-left"></i> Restore Node
+                  </button>
+                </div>
+              </div>
+
+              <!-- Memory Card 5 -->
+              <div class="memory-card" data-category="analysis" data-starred="false">
+                <div class="card-status-strip cyan"></div>
+                <div class="memory-card-header">
+                  <span class="mem-cycle"><i class="fa-solid fa-timeline"></i> CYCLE 2094.09.20 • 11:15</span>
+                  <div class="mem-actions">
+                    <button class="star-btn" title="Toggle Pinned"><i class="fa-regular fa-star"></i></button>
+                    <button class="mem-more-btn"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                  </div>
+                </div>
+                <h3 class="memory-card-title">Synaptic Latency Optimization Benchmark</h3>
+                <p class="memory-card-summary">
+                  Profiled tensor core instruction pipelines. Achieved 24% reduction in memory stall cycles via AVX-512 vector alignment.
+                </p>
+                <div class="memory-tags">
+                  <span class="m-tag">Benchmarking</span>
+                  <span class="m-tag">Latency</span>
+                  <span class="m-tag">Hardware</span>
+                </div>
+                <div class="memory-footer">
+                  <span class="m-stat"><i class="fa-solid fa-cube"></i> 890 KB Vector</span>
+                  <button class="cyber-btn-sm" onclick="restoreMemoryToChat('Synaptic Latency Optimization Benchmark')">
+                    <i class="fa-solid fa-arrow-rotate-left"></i> Restore Node
+                  </button>
+                </div>
+              </div>
+
+              <!-- Memory Card 6 -->
+              <div class="memory-card" data-category="swarm" data-starred="true">
+                <div class="card-status-strip magenta"></div>
+                <div class="memory-card-header">
+                  <span class="mem-cycle"><i class="fa-solid fa-timeline"></i> CYCLE 2094.09.18 • 16:40</span>
+                  <div class="mem-actions">
+                    <button class="star-btn active" title="Toggle Pinned"><i class="fa-solid fa-star"></i></button>
+                    <button class="mem-more-btn"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                  </div>
+                </div>
+                <h3 class="memory-card-title">Autonomous Swarm Consensus Topology</h3>
+                <p class="memory-card-summary">
+                  Established Byzantine fault-tolerant mesh between Sentinel, Synth-Weaver, and Holo-Renderer with zero coordinator bottleneck.
+                </p>
+                <div class="memory-tags">
+                  <span class="m-tag">Mesh</span>
+                  <span class="m-tag">Consensus</span>
+                  <span class="m-tag">Swarm</span>
+                </div>
+                <div class="memory-footer">
+                  <span class="m-stat"><i class="fa-solid fa-cube"></i> 2.1 MB Vector</span>
+                  <button class="cyber-btn-sm" onclick="navigateToScreen('swarm')">
+                    <i class="fa-solid fa-diagram-project"></i> Open Swarm
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- ==============================================
+             SCREEN 4: AI RESPONSE & RESULTS INTERFACE
+             ============================================== -->
+        <section class="screen-view" id="screen-results">
+          <div class="results-layout">
+            
+            <!-- Results Header HUD -->
+            <div class="results-header cyber-panel">
+              <div class="results-title-group">
+                <div class="results-badge"><i class="fa-solid fa-cube"></i> SYNTHESIS ARTIFACT #2094-ALPHA</div>
+                <h2>Multimodal Holographic Viewport & Code Analysis</h2>
+                <div class="results-meta-row">
+                  <span><i class="fa-solid fa-calendar"></i> CYCLE 2094.09.25</span>
+                  <span><i class="fa-solid fa-microchip"></i> ENGINE: NEURAL CORE v7.2</span>
+                  <span class="neon-cyan"><i class="fa-solid fa-check-circle"></i> VALIDATED ZERO HALLUCINATIONS</span>
+                </div>
+              </div>
+
+              <div class="results-header-actions">
+                <button class="cyber-btn-outline" onclick="exportArtifact()"><i class="fa-solid fa-download"></i> Export Bundle</button>
+                <button class="cyber-btn-solid primary" onclick="navigateToScreen('chat')"><i class="fa-solid fa-arrow-left"></i> Return to Chat</button>
+              </div>
+            </div>
+
+            <!-- Main Results Workspace Split -->
+            <div class="results-grid">
+              
+              <!-- Left: Holographic 3D Viewport Simulation -->
+              <div class="cyber-panel col-span-7 viewport-panel">
+                <div class="panel-header">
+                  <span class="panel-title"><i class="fa-solid fa-vr-cardboard neon-cyan"></i> HOLOGRAPHIC SPATIAL VIEWPORT // 8K RENDER</span>
+                  <div class="viewport-toggles">
+                    <button class="view-toggle-btn active" id="toggle-grid-overlay" onclick="toggleOverlay('grid')">GRID</button>
+                    <button class="view-toggle-btn active" id="toggle-telemetry-overlay" onclick="toggleOverlay('telemetry')">TELEMETRY</button>
+                    <button class="view-toggle-btn" id="toggle-wireframe" onclick="toggleOverlay('wireframe')">WIREFRAME</button>
+                  </div>
+                </div>
+
+                <div class="viewport-stage" id="hologram-stage">
+                  <img src="assets/ai_results.jpg" alt="Holographic 3D Synthesis Viewport" class="viewport-hologram-img" id="results-hologram-img">
+                  
+                  <!-- Interactive Hover Scanning Crosshairs -->
+                  <div class="hud-target-reticle" id="reticle">
+                    <span class="reticle-coords">X: 524.2  Y: 890.1  Z: 142.0</span>
+                    <span class="reticle-label">QUANTUM CLUSTER α</span>
+                  </div>
+
+                  <!-- Overlay HUD telemetry elements -->
+                  <div class="hologram-live-badge">
+                    <span class="pulse-cyan-dot"></span> REALTIME PHOTON RECONSTRUCTION
+                  </div>
+
+                  <div class="hologram-spatial-metrics">
+                    <div class="s-metric"><span>NODES:</span> <strong>14,290</strong></div>
+                    <div class="s-metric"><span>COHERENCE:</span> <strong>99.4%</strong></div>
+                    <div class="s-metric"><span>FPS:</span> <strong>120.0</strong></div>
+                  </div>
+                </div>
+
+                <div class="viewport-caption">
+                  <i class="fa-solid fa-info-circle neon-cyan"></i>
+                  <span>Interact with holographic city mesh to inspect autonomous routing nodes and quantum data entanglements.</span>
+                </div>
+              </div>
+
+              <!-- Right: Reasoning Tree & Metrics -->
+              <div class="col-span-5 results-side-column">
+                
+                <!-- Confidence & Telemetry Dials -->
+                <div class="cyber-panel">
+                  <div class="panel-header">
+                    <span class="panel-title"><i class="fa-solid fa-chart-pie neon-magenta"></i> VERIFICATION METRICS</span>
+                    <span class="panel-tag neon-green">VERIFIED</span>
+                  </div>
+                  <div class="confidence-grid">
+                    <div class="conf-card">
+                      <div class="conf-ring-outer">
+                        <svg class="ring-svg" viewBox="0 0 100 100">
+                          <circle class="ring-bg" cx="50" cy="50" r="40"></circle>
+                          <circle class="ring-progress cyan-stroke" cx="50" cy="50" r="40" style="stroke-dashoffset: 8;"></circle>
+                        </svg>
+                        <span class="conf-pct neon-cyan">99.4%</span>
+                      </div>
+                      <span class="conf-label">COHERENCE RATE</span>
+                    </div>
+
+                    <div class="conf-card">
+                      <div class="conf-ring-outer">
+                        <svg class="ring-svg" viewBox="0 0 100 100">
+                          <circle class="ring-bg" cx="50" cy="50" r="40"></circle>
+                          <circle class="ring-progress magenta-stroke" cx="50" cy="50" r="40" style="stroke-dashoffset: 15;"></circle>
+                        </svg>
+                        <span class="conf-pct neon-magenta">98.7%</span>
+                      </div>
+                      <span class="conf-label">SEMANTIC FIDELITY</span>
+                    </div>
+
+                    <div class="conf-card">
+                      <div class="conf-ring-outer">
+                        <svg class="ring-svg" viewBox="0 0 100 100">
+                          <circle class="ring-bg" cx="50" cy="50" r="40"></circle>
+                          <circle class="ring-progress amber-stroke" cx="50" cy="50" r="40" style="stroke-dashoffset: 4;"></circle>
+                        </svg>
+                        <span class="conf-pct neon-amber">0.02</span>
+                      </div>
+                      <span class="conf-label">UNCERTAINTY</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Deep Chain of Thought Synthesis Tree -->
+                <div class="cyber-panel">
+                  <div class="panel-header">
+                    <span class="panel-title"><i class="fa-solid fa-sitemap neon-cyan"></i> CHAIN OF THOUGHT BREAKDOWN</span>
+                  </div>
+                  <div class="cot-timeline">
+                    <div class="cot-node completed">
+                      <div class="cot-dot"><i class="fa-solid fa-check"></i></div>
+                      <div class="cot-content">
+                        <div class="cot-title">1. Spatial Grid Discretization</div>
+                        <p class="cot-desc">Divided 3D urban matrix into 14,290 spatial quantum voxels.</p>
+                      </div>
+                    </div>
+
+                    <div class="cot-node completed">
+                      <div class="cot-dot"><i class="fa-solid fa-check"></i></div>
+                      <div class="cot-content">
+                        <div class="cot-title">2. Swarm Route Optimization</div>
+                        <p class="cot-desc">Evaluated 4,800 concurrent agent travel paths under congestion heuristics.</p>
+                      </div>
+                    </div>
+
+                    <div class="cot-node completed">
+                      <div class="cot-dot"><i class="fa-solid fa-check"></i></div>
+                      <div class="cot-content">
+                        <div class="cot-title">3. Holographic Photon Shading</div>
+                        <p class="cot-desc">Rendered raytraced neon luminescence buffers in 8K viewport.</p>
+                      </div>
+                    </div>
+
+                    <div class="cot-node active">
+                      <div class="cot-dot pulse"><i class="fa-solid fa-bolt"></i></div>
+                      <div class="cot-content">
+                        <div class="cot-title">4. Real-time Telemetry Synchronization</div>
+                        <p class="cot-desc">Transmitting spatial delta streams to active Swarm Mesh at 120 FPS.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Bottom Row: Code Synthesis & Sandbox Runner (Full width) -->
+              <div class="cyber-panel col-span-12">
+                <div class="panel-header">
+                  <span class="panel-title"><i class="fa-solid fa-terminal neon-green"></i> SYNTHESIZED QUANTUM MODULE SANDBOX</span>
+                  <div class="sandbox-actions">
+                    <button class="cyber-btn-sm" id="btn-run-sandbox" onclick="runSandboxSimulation()">
+                      <i class="fa-solid fa-play"></i> EXECUTE IN SANDBOX
+                    </button>
+                    <button class="cyber-btn-sm" onclick="copyCodeFromSandbox()">
+                      <i class="fa-regular fa-copy"></i> COPY MODULE
+                    </button>
+                  </div>
+                </div>
+
+                <div class="sandbox-split">
+                  <div class="sandbox-code">
+                    <pre><code id="sandbox-code-content"><span class="kw">pub async fn</span> <span class="fn">reconstruct_holographic_mesh</span>(
+    voxels: &amp;[<span class="type">SpatialVoxel</span>],
+    quantum_seed: <span class="type">u64</span>,
+) -&gt; <span class="type">Result</span>&lt;<span class="type">MeshBuffer</span>, <span class="type">SynapseError</span>&gt; {
+    <span class="kw">let</span> <span class="kw">mut</span> buffer = <span class="type">MeshBuffer</span>::with_capacity(voxels.len() * <span class="num">8</span>);
+    <span class="kw">for</span> v <span class="kw">in</span> voxels {
+        <span class="kw">let</span> photon_intensity = v.density * <span class="num">0.9942</span>;
+        buffer.push_vertex(v.position, photon_intensity);
+    }
+    <span class="kw">Ok</span>(buffer)
+}</code></pre>
+                  </div>
+
+                  <div class="sandbox-output">
+                    <div class="output-header">
+                      <span class="out-title"><i class="fa-solid fa-desktop"></i> SANDBOX CONSOLE OUTPUT</span>
+                      <span class="out-status" id="sandbox-status">IDLE - READY</span>
+                    </div>
+                    <div class="output-console" id="sandbox-console-log">
+                      [00:00.00] Sandbox initialized in isolated WebAssembly micro-runtime.<br>
+                      [00:00.01] SIMD instruction sets enabled.<br>
+                      [00:00.02] Memory mapped: 16 MB heap reserved.<br>
+                      &gt; Click "EXECUTE IN SANDBOX" to test module execution.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- ==============================================
+             SCREEN 5: AGENT SWARM ORCHESTRATOR (SPECIAL SCREEN)
+             ============================================== -->
+        <section class="screen-view" id="screen-swarm">
+          <div class="swarm-layout">
+            
+            <div class="swarm-header cyber-panel">
+              <div class="swarm-title-wrap">
+                <h2><i class="fa-solid fa-diagram-project neon-magenta"></i> NEURAL AGENT SWARM ORCHESTRATOR</h2>
+                <p>Real-time autonomous multi-agent mesh topology, state synchronization, and execution pipelines.</p>
+              </div>
+
+              <div class="swarm-controls">
+                <button class="cyber-btn-outline" onclick="addAgentToMesh()"><i class="fa-solid fa-plus"></i> Spawn Agent</button>
+                <button class="cyber-btn-outline" onclick="triggerSwarmRebalance()"><i class="fa-solid fa-arrows-rotate"></i> Rebalance Topology</button>
+                <button class="cyber-btn-solid primary" onclick="dispatchAllAgents()"><i class="fa-solid fa-bolt"></i> Synchronize Swarm</button>
+              </div>
+            </div>
+
+            <div class="swarm-grid">
+              
+              <!-- Interactive Canvas Swarm Mesh (Left 8 cols) -->
+              <div class="cyber-panel col-span-8 swarm-canvas-panel">
+                <div class="panel-header">
+                  <span class="panel-title"><i class="fa-solid fa-network-wired neon-cyan"></i> LIVE NEURAL MESH TOPOLOGY</span>
+                  <span class="panel-tag neon-green"><span class="blink-dot"></span> 4 NODES SYNCED</span>
+                </div>
+
+                <div class="swarm-canvas-container" id="swarm-canvas-wrap">
+                  <canvas id="swarm-network-canvas"></canvas>
+                  <div class="canvas-instructions">
+                    <i class="fa-solid fa-computer-mouse"></i> Click & drag nodes to adjust topology • Click a node to view telemetry
+                  </div>
+                </div>
+              </div>
+
+              <!-- Agent Details & Telemetry (Right 4 cols) -->
+              <div class="cyber-panel col-span-4 agent-telemetry-panel">
+                <div class="panel-header">
+                  <span class="panel-title"><i class="fa-solid fa-microchip neon-amber"></i> SELECTED NODE TELEMETRY</span>
+                  <span class="panel-tag" id="selected-agent-tag">SENTINEL-ALPHA</span>
+                </div>
+
+                <div class="agent-detail-card" id="agent-detail-card">
+                  <div class="agent-avatar-banner">
+                    <div class="agent-icon-badge"><i class="fa-solid fa-shield-virus" id="sel-agent-icon"></i></div>
+                    <div>
+                      <h3 id="sel-agent-name">SENTINEL-ALPHA</h3>
+                      <div class="sel-agent-role" id="sel-agent-role">Cryptographic Guard & Threat Queller</div>
+                    </div>
+                  </div>
+
+                  <div class="agent-stat-rows">
+                    <div class="a-stat-row">
+                      <span>STATUS:</span>
+                      <span class="neon-green" id="sel-agent-status">ACTIVE // MONITORING</span>
+                    </div>
+                    <div class="a-stat-row">
+                      <span>COMPUTE ALLOCATION:</span>
+                      <span class="neon-cyan" id="sel-agent-compute">24.5 TFLOPS</span>
+                    </div>
+                    <div class="a-stat-row">
+                      <span>PACKETS ANALYZED:</span>
+                      <span class="neon-magenta" id="sel-agent-packets">1,842,090 / sec</span>
+                    </div>
+                    <div class="a-stat-row">
+                      <span>LATENCY TO CORE:</span>
+                      <span class="neon-amber" id="sel-agent-latency">0.12 ms</span>
+                    </div>
+                  </div>
+
+                  <div class="agent-live-log-box">
+                    <div class="log-title">AGENT ACTIVITY LOG:</div>
+                    <div class="log-lines" id="agent-live-logs">
+                      <div class="l-line"><span class="l-time">[19:44:01]</span> Heartbeat sync OK (epoch #9480)</div>
+                      <div class="l-line"><span class="l-time">[19:44:03]</span> Scanned 256 subnets; 0 intrusion vectors</div>
+                      <div class="l-line"><span class="l-time">[19:44:05]</span> State hash committed to consensus ring</div>
+                    </div>
+                  </div>
+
+                  <div class="agent-action-buttons">
+                    <button class="cyber-btn-outline full-width" onclick="restartSelectedAgent()">
+                      <i class="fa-solid fa-rotate"></i> Cycle Agent Process
+                    </button>
+                    <button class="cyber-btn-solid primary full-width" onclick="promoteAgentToMaster()">
+                      <i class="fa-solid fa-crown"></i> Prioritize Compute Stream
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- ==============================================
+             SCREEN 6: PROFILE & SETTINGS
+             ============================================== -->
+        <section class="screen-view" id="screen-settings">
+          <div class="settings-layout">
+            
+            <div class="cyber-panel settings-header">
+              <div class="profile-header-flex">
+                <div class="user-big-avatar">
+                  <img src="assets/ai_avatar.jpg" alt="Aethel AI Core" class="avatar-large-img">
+                  <div class="avatar-edit-badge" title="Calibrate Neural Link"><i class="fa-solid fa-gear"></i></div>
+                </div>
+                <div class="profile-meta-text">
+                  <div class="profile-chips">
+                    <span class="hud-chip cyan"><i class="fa-solid fa-shield"></i> CLEARANCE: LEVEL 4 OMNI</span>
+                    <span class="hud-chip magenta"><i class="fa-solid fa-fingerprint"></i> NEURO-ID: #7702-X-SHIHAB</span>
+                    <span class="hud-chip green"><i class="fa-solid fa-link"></i> SYNAPSE: SYNCHRONIZED</span>
+                  </div>
+                  <h2>Neural Calibration & Assistant Persona</h2>
+                  <p>Configure cognitive hyperparameters, visual HUD overrides, neural voice synthesis, and cryptographic API bridges.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-grid">
+              
+              <!-- Persona Selection Panel -->
+              <div class="cyber-panel col-span-6">
+                <div class="panel-header">
+                  <span class="panel-title"><i class="fa-solid fa-user-gear neon-cyan"></i> ASSISTANT PERSONA SELECTOR</span>
+                  <span class="panel-tag">COGNITIVE ARCHETYPE</span>
+                </div>
+
+                <div class="persona-cards-list">
+                  <div class="persona-option-card active" onclick="selectPersona(this, 'Aethel', 'Primary Neural Architect')">
+                    <div class="persona-radio"><i class="fa-solid fa-circle-check"></i></div>
+                    <div class="persona-details">
+                      <div class="p-name">AETHEL // The Quantum Architect (Default)</div>
+                      <div class="p-sub">Balanced multimodal reasoning, code synthesis, and deep holographic spatial architecture.</div>
+                    </div>
+                  </div>
+
+                  <div class="persona-option-card" onclick="selectPersona(this, 'Nexus', 'Autonomous Cybersleuth')">
+                    <div class="persona-radio"><i class="fa-regular fa-circle"></i></div>
+                    <div class="persona-details">
+                      <div class="p-name">NEXUS // Autonomous Cybersleuth</div>
+                      <div class="p-sub">Specialized in threat detection, binary auditing, network reconnaissance, and hardened security.</div>
+                    </div>
+                  </div>
+
+                  <div class="persona-option-card" onclick="selectPersona(this, 'Valkyrie', 'High-Speed Tactician')">
+                    <div class="persona-radio"><i class="fa-regular fa-circle"></i></div>
+                    <div class="persona-details">
+                      <div class="p-name">VALKYRIE // High-Speed Tactician</div>
+                      <div class="p-sub">Aggressive sub-millisecond execution, ultra-concise responses, optimized for real-time swarm leadership.</div>
+                    </div>
+                  </div>
+
+                  <div class="persona-option-card" onclick="selectPersona(this, 'Kairo', 'Philosophical Synthesizer')">
+                    <div class="persona-radio"><i class="fa-regular fa-circle"></i></div>
+                    <div class="persona-details">
+                      <div class="p-name">KAIRO // Philosophical Synthesizer</div>
+                      <div class="p-sub">Divergent speculative reasoning, creative cybernetic writing, multi-dimensional thought experiments.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Hyperparameters & Calibration Sliders -->
+              <div class="cyber-panel col-span-6">
+                <div class="panel-header">
+                  <span class="panel-title"><i class="fa-solid fa-sliders neon-magenta"></i> COGNITIVE HYPERPARAMETERS</span>
+                  <button class="panel-btn" onclick="resetDefaultParameters()">RESTORE DEFAULTS</button>
+                </div>
+
+                <div class="settings-controls-group">
+                  <!-- Temperature / Creativity Slider -->
+                  <div class="setting-slider-item">
+                    <div class="slider-header">
+                      <label for="slider-temp">COGNITIVE TEMPERATURE (CREATIVITY)</label>
+                      <span class="slider-val neon-cyan" id="val-temp">0.72</span>
+                    </div>
+                    <input type="range" id="slider-temp" min="0" max="1" step="0.01" value="0.72" oninput="updateSliderVal('temp', this.value)">
+                    <div class="slider-ticks">
+                      <span>0.0 (Deterministic)</span>
+                      <span>0.5 (Balanced)</span>
+                      <span>1.0 (Divergent)</span>
+                    </div>
+                  </div>
+
+                  <!-- Entanglement / Reasoning Depth -->
+                  <div class="setting-slider-item">
+                    <div class="slider-header">
+                      <label for="slider-depth">REASONING BUDGET (CHAIN OF THOUGHT)</label>
+                      <span class="slider-val neon-magenta" id="val-depth">4,096 tokens</span>
+                    </div>
+                    <input type="range" id="slider-depth" min="512" max="8192" step="256" value="4096" oninput="updateSliderVal('depth', this.value + ' tokens')">
+                    <div class="slider-ticks">
+                      <span>512 (Fast)</span>
+                      <span>4,096 (Deep)</span>
+                      <span>8,192 (Exhaustive)</span>
+                    </div>
+                  </div>
+
+                  <!-- Hallucination Strictness -->
+                  <div class="setting-slider-item">
+                    <div class="slider-header">
+                      <label for="slider-strict">HALLUCINATION VERIFICATION THRESHOLD</label>
+                      <span class="slider-val neon-green" id="val-strict">99.8%</span>
+                    </div>
+                    <input type="range" id="slider-strict" min="90" max="100" step="0.1" value="99.8" oninput="updateSliderVal('strict', this.value + '%')">
+                    <div class="slider-ticks">
+                      <span>90.0% (Relaxed)</span>
+                      <span>98.0% (Strict)</span>
+                      <span>100% (Zero-Tolerance)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Interface HUD Overrides & Audio FX -->
+              <div class="cyber-panel col-span-6">
+                <div class="panel-header">
+                  <span class="panel-title"><i class="fa-solid fa-display neon-amber"></i> INTERFACE HUD PREFERENCES</span>
+                </div>
+
+                <div class="toggle-options-list">
+                  <div class="toggle-option-row">
+                    <div>
+                      <div class="t-name">Holographic CRT Scanlines</div>
+                      <div class="t-sub">Renders subtle retro-futuristic CRT scanline overlay</div>
+                    </div>
+                    <label class="cyber-switch">
+                      <input type="checkbox" id="pref-scanlines" checked onchange="toggleScanlinePref(this.checked)">
+                      <span class="slider-toggle"></span>
+                    </label>
+                  </div>
+
+                  <div class="toggle-option-row">
+                    <div>
+                      <div class="t-name">Web Audio Synthesizer Sound FX</div>
+                      <div class="t-sub">Play futuristic cyber clicks and telemetry chirps on interaction</div>
+                    </div>
+                    <label class="cyber-switch">
+                      <input type="checkbox" id="pref-audio" checked onchange="toggleAudioPref(this.checked)">
+                      <span class="slider-toggle"></span>
+                    </label>
+                  </div>
+
+                  <div class="toggle-option-row">
+                    <div>
+                      <div class="t-name">Dynamic Particle Field Canvas</div>
+                      <div class="t-sub">Render floating cybernetic particles in ambient background</div>
+                    </div>
+                    <label class="cyber-switch">
+                      <input type="checkbox" id="pref-particles" checked onchange="toggleParticlesPref(this.checked)">
+                      <span class="slider-toggle"></span>
+                    </label>
+                  </div>
+
+                  <div class="toggle-option-row">
+                    <div>
+                      <div class="t-name">SIMD Hardware Acceleration</div>
+                      <div class="t-sub">Optimize tensor operations with native CPU vectorization</div>
+                    </div>
+                    <label class="cyber-switch">
+                      <input type="checkbox" checked disabled>
+                      <span class="slider-toggle"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Cryptographic Keys & API Enclaves -->
+              <div class="cyber-panel col-span-6">
+                <div class="panel-header">
+                  <span class="panel-title"><i class="fa-solid fa-key neon-green"></i> QUANTUM ENCLAVE & CRYPTO KEYS</span>
+                  <span class="panel-tag neon-green"><i class="fa-solid fa-lock"></i> AES-GCM-256</span>
+                </div>
+
+                <div class="api-keys-group">
+                  <div class="key-field">
+                    <label>NEURAL CLOUD SYNAPSE ENDPOINT</label>
+                    <div class="input-with-copy">
+                      <input type="text" value="wss://synapse.cyber-core.mesh:9942/v7/stream" readonly>
+                      <button class="cyber-btn-icon" onclick="copyGenericText('wss://synapse.cyber-core.mesh:9942/v7/stream')"><i class="fa-regular fa-copy"></i></button>
+                    </div>
+                  </div>
+
+                  <div class="key-field">
+                    <label>OPERATOR QUANTUM SECRET KEY</label>
+                    <div class="input-with-copy">
+                      <input type="password" id="secret-key-field" value="sk-syn-7702-x-quantum-mesh-omega-9941829" readonly>
+                      <button class="cyber-btn-icon" id="btn-toggle-key-visibility" onclick="toggleKeyVisibility()"><i class="fa-regular fa-eye"></i></button>
+                      <button class="cyber-btn-icon" onclick="copyGenericText('sk-syn-7702-x-quantum-mesh-omega-9941829')"><i class="fa-regular fa-copy"></i></button>
+                    </div>
+                  </div>
+
+                  <div class="save-settings-row">
+                    <button class="cyber-btn-solid primary full-width" onclick="saveAllPreferences()">
+                      <i class="fa-solid fa-floppy-disk"></i> COMMIT CALIBRATION SETTINGS
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <!-- Quick Command Palette Modal (Ctrl + K) -->
+    <div class="modal-overlay" id="command-modal">
+      <div class="command-palette-box">
+        <div class="palette-input-wrap">
+          <i class="fa-solid fa-terminal neon-cyan"></i>
+          <input type="text" id="palette-search" placeholder="Type a command or jump to screen... (e.g. 'chat', 'swarm', 'rust', 'diagnostics')">
+          <kbd class="esc-hint" onclick="closeCommandPalette()">ESC</kbd>
+        </div>
+        <div class="palette-results" id="palette-results">
+          <div class="palette-item" onclick="executePaletteAction('screen', 'dashboard')">
+            <i class="fa-solid fa-gauge-high neon-cyan"></i>
+            <div class="p-item-text">
+              <span class="p-item-title">Go to Core Dashboard</span>
+              <span class="p-item-desc">System status, telemetry, and quick capsules</span>
+            </div>
+            <span class="p-item-key">1</span>
+          </div>
+
+          <div class="palette-item" onclick="executePaletteAction('screen', 'chat')">
+            <i class="fa-solid fa-comments neon-magenta"></i>
+            <div class="p-item-text">
+              <span class="p-item-title">Open Neural Chat Stream</span>
+              <span class="p-item-desc">Interactive conversational interface</span>
+            </div>
+            <span class="p-item-key">2</span>
+          </div>
+
+          <div class="palette-item" onclick="executePaletteAction('screen', 'history')">
+            <i class="fa-solid fa-clock-rotate-left neon-amber"></i>
+            <div class="p-item-text">
+              <span class="p-item-title">Inspect Memory Vault</span>
+              <span class="p-item-desc">Browse saved timeline nodes and knowledge vectors</span>
+            </div>
+            <span class="p-item-key">3</span>
+          </div>
+
+          <div class="palette-item" onclick="executePaletteAction('screen', 'results')">
+            <i class="fa-solid fa-cubes-stacked neon-green"></i>
+            <div class="p-item-text">
+              <span class="p-item-title">View Results & 3D Hologram</span>
+              <span class="p-item-desc">Holographic viewport, metrics, and code sandbox</span>
+            </div>
+            <span class="p-item-key">4</span>
+          </div>
+
+          <div class="palette-item" onclick="executePaletteAction('screen', 'swarm')">
+            <i class="fa-solid fa-diagram-project neon-cyan"></i>
+            <div class="p-item-text">
+              <span class="p-item-title">Open Agent Swarm Orchestrator</span>
+              <span class="p-item-desc">Interactive neural mesh node canvas</span>
+            </div>
+            <span class="p-item-key">5</span>
+          </div>
+
+          <div class="palette-item" onclick="executePaletteAction('screen', 'settings')">
+            <i class="fa-solid fa-sliders neon-magenta"></i>
+            <div class="p-item-text">
+              <span class="p-item-title">Calibrate Persona & Settings</span>
+              <span class="p-item-desc">Hyperparameters, personas, and HUD preferences</span>
+            </div>
+            <span class="p-item-key">6</span>
+          </div>
+
+          <div class="palette-item" onclick="executePaletteAction('action', 'diagnostics')">
+            <i class="fa-solid fa-microchip neon-amber"></i>
+            <div class="p-item-text">
+              <span class="p-item-title">Run Full System Diagnostics</span>
+              <span class="p-item-desc">Test all neural tensors and telemetry</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cyber Toast Notification -->
+    <div class="cyber-toast" id="cyber-toast">
+      <div class="toast-icon"><i class="fa-solid fa-circle-check"></i></div>
+      <div class="toast-body">
+        <div class="toast-title" id="toast-title">SYNAPSE NOTICE</div>
+        <div class="toast-desc" id="toast-desc">Operation executed successfully.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
